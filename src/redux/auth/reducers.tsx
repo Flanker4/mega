@@ -1,26 +1,18 @@
 import { AuthState } from "./types";
 import { Action } from "redux";
 import { isType } from "typescript-fsa";
-import { LogIn, LogOut } from "./actions";
+import { authActions } from "./actions";
+import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 const initialState: AuthState = {
   authenticated: false
 };
 
-export default function auth(
-  state: AuthState = initialState,
-  action: Action
-): AuthState {
-  if (isType(action, LogIn)) {
-    return {
-      username: action.payload.username,
-      authenticated: true
-    };
-  }
-  if (isType(action, LogOut)) {
-    return {
-      authenticated: false
-    };
-  }
-  return state;
-}
+export const auth = reducerWithInitialState(initialState)
+  .case(authActions.logIn, (state, value) => ({
+    username: value.username,
+    authenticated: true
+  }))
+  .case(authActions.logOut, (state, value) => ({
+    authenticated: false
+  }));
