@@ -1,21 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { authActions } from "../../redux/auth/actions";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { IStore } from "../../redux";
-import { ActivityIndicator } from "react-native";
-
-export const AuthForm = styled(Form)`
-  max-width: 600px;
-  padding: 26px 20px;
-  display: flex;
-  align-items: stretch;
-  margin: 0 auto;
-  flex-direction: column;
-`;
+import { AuthForm, AuthInput, AuthButton, ErrorHint } from "./common";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -49,13 +39,13 @@ const SignIn = ({ signIn, isLoading }: SignInProps) => {
         onSubmit={handleSubmit}
       >
         <AuthForm>
-          <Field placeholder="Email" type="email" name="email" />
-          <ErrorMessage name="email" component="div" />
-          <Field placeholder="Password" type="password" name="password" />
-          <ErrorMessage name="password" component="div" />
-          <button type="submit" disabled={isLoading}>
+          <ErrorMessage name="email" component={ErrorHint} />
+          <AuthInput placeholder="Email" type="email" name="email" />
+          <ErrorMessage name="password" component={ErrorHint} />
+          <AuthInput placeholder="Password" type="password" name="password" />
+          <AuthButton type="submit" disabled={isLoading}>
             Submit
-          </button>
+          </AuthButton>
           <Link to="/sign_up">Have an account?</Link>
         </AuthForm>
       </Formik>

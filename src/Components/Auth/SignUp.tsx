@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { AuthForm } from "./SigIn";
+import { AuthForm, AuthInput, AuthButton, ErrorHint } from "./common";
 import { connect } from "react-redux";
 import { authActions } from "../../redux/auth/actions";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { IStore } from "../../redux";
-import { ActivityIndicator } from "react-native";
 
 interface SignUpProps {
   isLoading: boolean;
@@ -49,15 +48,16 @@ export const SignUp = ({ signUp, isLoading }: SignUpProps) => {
         onSubmit={handleSubmit}
       >
         <AuthForm>
-          <Field placeholder="Username" name="username" />
-          <ErrorMessage name="username" component="div" />
-          <Field placeholder="Email" type="email" name="email" />
-          <ErrorMessage name="email" component="div" />
-          <Field placeholder="Password" type="password" name="password" />
-          <ErrorMessage name="password" component="div" />
-          <button type="submit" disabled={isLoading}>
+          <ErrorMessage name="username" component={ErrorHint} />
+          <AuthInput placeholder="Username" name="username" />
+          <ErrorMessage name="email" component={ErrorHint} />
+          <AuthInput placeholder="Email" type="email" name="email" />
+          <ErrorMessage name="password" component={ErrorHint} />
+          <AuthInput placeholder="Password" type="password" name="password" />
+
+          <AuthButton type="submit" disabled={isLoading}>
             Submit
-          </button>
+          </AuthButton>
           <Link to="/sign_in">Have an account?</Link>
         </AuthForm>
       </Formik>
