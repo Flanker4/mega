@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { authActions } from "../../redux/auth/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { IStore } from "../../redux";
+import { ActivityIndicator } from "react-native";
 
 export const AuthForm = styled(Form)`
   max-width: 600px;
@@ -25,10 +27,11 @@ const SignInSchema = Yup.object().shape({
 });
 
 interface SignInProps {
-  signIn: (payload: { username: string; password: string }) => any;
+  isLoading: boolean;
+  signIn: (payload: { email: string; password: string }) => any;
 }
 
-const SignIn = ({ signIn }: SignInProps) => {
+const SignIn = ({ signIn, isLoading }: SignInProps) => {
   const handleSubmit = useCallback(
     (values, { setSubmitting }) => {
       signIn(values);
@@ -50,7 +53,9 @@ const SignIn = ({ signIn }: SignInProps) => {
           <ErrorMessage name="email" component="div" />
           <Field placeholder="Password" type="password" name="password" />
           <ErrorMessage name="password" component="div" />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={isLoading}>
+            Submit
+          </button>
           <Link to="/sign_up">Have an account?</Link>
         </AuthForm>
       </Formik>
@@ -58,6 +63,11 @@ const SignIn = ({ signIn }: SignInProps) => {
   );
 };
 
-export default connect(null, {
-  signIn: authActions.signIn.started
-})(SignIn);
+export default connect(
+  ({ auth }: IStore) => ({
+    isLoading: auth.isLoading
+  }),
+  {
+    signIn: authActions.signIn.started
+  }
+)(SignIn);

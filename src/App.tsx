@@ -1,13 +1,14 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { Main } from "./Components/Main";
 import HeaderContainer from "./Components/Header/HeaderContainer";
+import { history } from "./redux/index";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <div className="App">
         <HeaderContainer />
         <Main />
@@ -27,7 +28,7 @@ const App: React.FC = () => {
           </a>
         </header>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 

@@ -1,5 +1,10 @@
 export interface AuthState {
-  authenticated: boolean;
-  username?: string;
-  token?: string;
+  user?: User;
+  isLoading: boolean;
+}
+
+export interface User {
+  token: string;
+  username: string;
+  email: string;
 }

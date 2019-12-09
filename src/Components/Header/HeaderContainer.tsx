@@ -5,7 +5,10 @@ import { IStore } from "../../redux";
 import { Header } from "./Header.flex";
 
 function mapStateToProps(appState: IStore) {
-  return { isAuthorized: appState.auth.authenticated };
+  return {
+    isAuthorized: !!(appState.auth.user && appState.auth.user.token),
+    username: appState.auth.user && appState.auth.user.username
+  };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

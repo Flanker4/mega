@@ -5,8 +5,11 @@ import { connect } from "react-redux";
 import { authActions } from "../../redux/auth/actions";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { IStore } from "../../redux";
+import { ActivityIndicator } from "react-native";
 
 interface SignUpProps {
+  isLoading: boolean;
   signUp: (payload: {
     username: string;
     email: string;
@@ -14,7 +17,7 @@ interface SignUpProps {
   }) => any;
 }
 
-const SignupSchema = Yup.object().shape({
+const SignUpSchema = Yup.object().shape({
   username: Yup.string()
     .min(1, "Too Short!")
     .max(50, "Too Long!")
@@ -27,7 +30,7 @@ const SignupSchema = Yup.object().shape({
     .required("Required")
 });
 
-export const SignUp = ({ signUp }: SignUpProps) => {
+export const SignUp = ({ signUp, isLoading }: SignUpProps) => {
   const handleSubmit = useCallback(
     (values, { setSubmitting }) => {
       signUp(values);
@@ -42,29 +45,31 @@ export const SignUp = ({ signUp }: SignUpProps) => {
 
       <Formik
         initialValues={{ username: "", email: "", password: "" }}
-        validationSchema={SignupSchema}
+        validationSchema={SignUpSchema}
         onSubmit={handleSubmit}
       >
-        {/*tslint:disable-next-line: jsx-no-multiline-js*/}
-        {({ isSubmitting }) => (
-          <AuthForm>
-            <Field placeholder="Username" name="username" />
-            <ErrorMessage name="username" component="div" />
-            <Field placeholder="Email" type="email" name="email" />
-            <ErrorMessage name="email" component="div" />
-            <Field placeholder="Password" type="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-            <Link to="/sign_in">Have an account?</Link>
-          </AuthForm>
-        )}
+        <AuthForm>
+          <Field placeholder="Username" name="username" />
+          <ErrorMessage name="username" component="div" />
+          <Field placeholder="Email" type="email" name="email" />
+          <ErrorMessage name="email" component="div" />
+          <Field placeholder="Password" type="password" name="password" />
+          <ErrorMessage name="password" component="div" />
+          <button type="submit" disabled={isLoading}>
+            Submit
+          </button>
+          <Link to="/sign_in">Have an account?</Link>
+        </AuthForm>
       </Formik>
     </div>
   );
 };
 
-export default connect(null, {
-  signUp: authActions.signUp.started
-})(SignUp);
+export default connect(
+  ({ auth }: IStore) => ({
+    isLoading: auth.isLoading
+  }),
+  {
+    signUp: authActions.signUp.started
+  }
+)(SignUp);

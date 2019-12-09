@@ -5,6 +5,7 @@ import { Button } from "react-native";
 
 interface IProps {
   isAuthorized: boolean;
+  username?: string;
   signOut: () => any;
 }
 
@@ -73,11 +74,11 @@ const NavRight = styled.div`
   }
 `;
 
-export const LogedInView = ({ signOut }: IProps) => {
+export const LogedInView = ({ signOut, username }: IProps) => {
   return (
     <>
       <HeaderButton to="/">Home</HeaderButton>
-      <HeaderButton to="/">User</HeaderButton>
+      <HeaderButton to="/">{username}</HeaderButton>
       <HeaderButton to="/" onClick={signOut}>
         LogOut
       </HeaderButton>

@@ -3,14 +3,27 @@ import { authActions } from "./actions";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 
 const initialState: AuthState = {
-  authenticated: false
+  isLoading: false,
+  user: undefined
 };
 
 export const auth = reducerWithInitialState(initialState)
+  .cases([authActions.signIn.started, authActions.signUp.started], state => ({
+    ...state,
+    isLoading: true
+  }))
+  .cases([authActions.signIn.failed, authActions.signUp.failed], state => ({
+    ...state,
+    isLoading: false
+  }))
   .case(authActions.signIn.done, (state, value) => ({
-    username: value.result.token,
-    authenticated: true
+    user: value.result,
+    isLoading: false
+  }))
+  .case(authActions.signUp.done, (state, value) => ({
+    ...state,
+    isLoading: false
   }))
   .case(authActions.signOut, (state, value) => ({
-    authenticated: false
+    isLoading: false
   }));
