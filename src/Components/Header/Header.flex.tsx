@@ -1,34 +1,36 @@
 import * as React from "react";
-import {} from "./AuthContainer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "react-native";
 
 interface IProps {
   isAuthorized: boolean;
-  signIn: (user: string, password: string) => any;
   signOut: () => any;
 }
 
 interface HeaderButtonProps {
-  primaryLink?: boolean;
+  type?: string;
 }
 
 const HeaderButton = styled(Link)`
+  color: ${(props: HeaderButtonProps) =>
+    props.type === "primary" ? "gray" : "darkgray"};
+
   display: block;
   cursor: pointer;
   font-size: 16px;
-  margin: 0 1em;
-  transition: 0.5s all ease-out;
+  transition: color 0.5s ease-out;
   &:hover {
     color: black;
   }
-  width: 100%;
-  @media only screen and (min-width: 768px) {
-    width: auto;
+  &:not(:last-of-type) {
+    margin: 0 0 1em 0;
   }
-  color: ${(props: HeaderButtonProps) =>
-    props.primaryLink ? "gray" : "darkgray"};
+  @media only screen and (min-width: 768px) {
+    &:not(:last-of-type) {
+      margin: 0 1em 0 0;
+    }
+  }
 `;
 
 const Nav = styled.div`
@@ -37,61 +39,61 @@ const Nav = styled.div`
 `;
 
 const NavHeader = styled.div`
+  box-sizing: border-box;
   max-width: 1010px;
   padding: 26px 20px;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 0 auto;
 `;
 const NavLeft = styled.div`
-  width: 50%;
-  @media only screen and (min-width: 768px) {
-    width: 33.333%;
-  }
+  flex: 1;
   text-align: left;
 `;
 const NavCenter = styled.div`
+  flex: 1;
   display: none;
   @media only screen and (min-width: 768px) {
-    width: 33.333%;
     display: inline;
   }
   text-align: center;
 `;
 
 const NavRight = styled.div`
-  width: 50%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
   @media only screen and (min-width: 768px) {
-    width: 33.333%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
   }
-  text-align: right;
-  margin-right: 20px;
 `;
 
-export const LogedInView = (props: IProps) => {
+export const LogedInView = ({ signOut }: IProps) => {
   return (
-    <div>
+    <>
       <HeaderButton to="/">Home</HeaderButton>
       <HeaderButton to="/">User</HeaderButton>
-      <HeaderButton to="/" onClick={() => props.signOut()}>
+      <HeaderButton to="/" onClick={signOut}>
         LogOut
       </HeaderButton>
-    </div>
+    </>
   );
 };
 
 export const LogedOutView = (props: IProps) => {
   return (
-    <div>
-      <HeaderButton primaryLink={true} to="/">
+    <>
+      <HeaderButton type="primary" to="/">
         Home
       </HeaderButton>
       <HeaderButton to="/sign_up">Sign Up</HeaderButton>
-      <HeaderButton to="/sign_in" onClick={() => props.signIn("", "")}>
-        Sign In
-      </HeaderButton>
-    </div>
+      <HeaderButton to="/sign_in">Sign In</HeaderButton>
+    </>
   );
 };
 
@@ -102,7 +104,7 @@ export const Header = (props: IProps) => {
     <Nav>
       <NavHeader>
         <NavLeft>Mega App</NavLeft>
-        <NavCenter>Title</NavCenter>
+        <NavCenter />
         <NavRight>
           <RightComponent {...props} />
         </NavRight>

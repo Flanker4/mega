@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { SignUp } from "./SignUp";
-import { SignIn } from "./SigIn";
 import { Home } from "./Home";
+import SignIn from "./Auth/SigIn";
+import SignUp from "./Auth/SignUp";
 
 export const Main = (props: any) => {
   return (

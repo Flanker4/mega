@@ -1,15 +1,15 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import AuthContainer from "./Components/AuthContainer";
 import { BrowserRouter } from "react-router-dom";
 import { Main } from "./Components/Main";
+import HeaderContainer from "./Components/Header/HeaderContainer";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <div className="App">
-        <AuthContainer />
+        <HeaderContainer />
         <Main />
 
         <header className="App-header">
