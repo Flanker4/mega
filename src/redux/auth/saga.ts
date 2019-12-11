@@ -1,5 +1,5 @@
-import { takeLatest, put } from "redux-saga/effects";
-import { authActions } from "../auth/actions";
+import { takeLatest, put, call, takeEvery } from "redux-saga/effects";
+import { authActions } from "./actions";
 import api from "../../services/api";
 import { push } from "react-router-redux";
 
@@ -40,7 +40,7 @@ export function* signInUser(
       params: action.payload,
       result: data.user
     });
-
+    yield call(api.setToken, resultAction.payload.result.token);
     yield put(resultAction);
     yield put(push("/"));
   } catch (error) {
@@ -53,7 +53,12 @@ export function* signInUser(
   }
 }
 
+export function* signOut(action: ReturnType<typeof authActions.signOut>) {
+  yield call(api.setToken, null);
+}
+
 export function* watchRegisterAsync() {
   yield takeLatest(authActions.signUp.started.type, signUpUser);
   yield takeLatest(authActions.signIn.started.type, signInUser);
+  yield takeEvery(authActions.signOut, signOut);
 }

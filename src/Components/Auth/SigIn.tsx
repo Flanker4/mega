@@ -7,6 +7,11 @@ import * as Yup from "yup";
 import { IStore } from "../../redux";
 import { AuthForm, AuthInput, AuthButton, ErrorHint } from "./common";
 
+interface SignInProps {
+  isLoading: boolean;
+  signIn: (payload: { email: string; password: string }) => any;
+}
+
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email")
@@ -15,11 +20,6 @@ const SignInSchema = Yup.object().shape({
     .min(8, "Too Short!")
     .required("Required")
 });
-
-interface SignInProps {
-  isLoading: boolean;
-  signIn: (payload: { email: string; password: string }) => any;
-}
 
 const SignIn = ({ signIn, isLoading }: SignInProps) => {
   const handleSubmit = useCallback(
@@ -52,6 +52,8 @@ const SignIn = ({ signIn, isLoading }: SignInProps) => {
     </div>
   );
 };
+
+export { SignIn };
 
 export default connect(
   ({ auth }: IStore) => ({
