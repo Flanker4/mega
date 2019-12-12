@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Author } from "../../redux/feed/types";
-import { AuthorProps } from "../Home/Feed";
-import { AuthorBlob, AuthorImage } from "../Home/common";
 import Loader from "react-loader-spinner";
 import { useParams } from "react-router";
 import api from "../../services/api";
@@ -34,7 +32,7 @@ const User = () => {
     <>
       <h3>{user.username}</h3>
       <p>{user.bio || "bio is not provided"}</p>
-      <img src={user.image} />
+      <img alt="Avatar" src={user.image} />
     </>
   );
 };

@@ -9,7 +9,7 @@ export const FeedBlob = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.3rem;
   margin: 0 0 1em 0;
   border-radius: 0.3rem;
@@ -28,8 +28,8 @@ export const AuthorImage = styled.img`
 `;
 
 export const AuthorLink = styled(Link)`
-  color: #fff;
+  color: black;
   &:hover {
-    color: #bbb;
+    color: darkgray;
   }
 `;

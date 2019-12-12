@@ -14,7 +14,7 @@ export function* signUpUser(
     );
     const resultAction = authActions.signUp.done({
       params: action.payload,
-      result: null
+      result: data
     });
 
     yield put(resultAction);

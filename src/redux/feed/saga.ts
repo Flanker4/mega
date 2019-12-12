@@ -1,5 +1,4 @@
 import { takeLatest, put } from "redux-saga/effects";
-import { authActions } from "../auth/actions";
 import api from "../../services/api";
 import { feedActions } from "./actions";
 

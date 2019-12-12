@@ -1,6 +1,7 @@
 import { FeedState } from "./types";
 import { feedActions } from "./actions";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
+import { number } from "prop-types";
 
 const initialState: FeedState = {
   articleCount: 0,
@@ -18,5 +19,6 @@ export const feed = reducerWithInitialState(initialState)
   }))
   .case(feedActions.loadFeed.done, (state, value) => ({
     ...value.result,
+    page: value.params.page,
     isLoading: false
   }));

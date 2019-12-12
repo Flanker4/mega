@@ -12,7 +12,7 @@ const getHeaders = () => {
 
 const processResponse = async (response: Response): Promise<any> => {
   const responseJson = await response.json();
-  if (response.status != 200) {
+  if (response.status !== 200) {
     throw responseJson;
   }
   return responseJson;

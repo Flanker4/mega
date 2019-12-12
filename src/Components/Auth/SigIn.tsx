@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { authActions } from "../../redux/auth/actions";
@@ -9,7 +9,7 @@ import { AuthForm, AuthInput, AuthButton, ErrorHint } from "./common";
 
 interface SignInProps {
   isLoading: boolean;
-  signIn: (payload: { email: string; password: string }) => any;
+  signIn: (payload: { email: string; password: string }) => void;
 }
 
 const SignInSchema = Yup.object().shape({

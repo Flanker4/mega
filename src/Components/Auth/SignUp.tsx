@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { AuthForm, AuthInput, AuthButton, ErrorHint } from "./common";
 import { connect } from "react-redux";
 import { authActions } from "../../redux/auth/actions";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { IStore } from "../../redux";
 

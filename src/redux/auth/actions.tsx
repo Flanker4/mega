@@ -1,5 +1,4 @@
 import actionCreatorFactory from "typescript-fsa";
-import { string } from "prop-types";
 import { User } from "./types";
 
 const actionCreator = actionCreatorFactory("Auth");

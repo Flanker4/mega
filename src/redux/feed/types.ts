@@ -1,5 +1,6 @@
 export interface FeedState {
   isLoading: boolean;
+  page?: number;
   articles?: Article[];
   articleCount: number;
 }

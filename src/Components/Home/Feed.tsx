@@ -1,7 +1,6 @@
 import React from "react";
 import { Article, Author } from "../../redux/feed/types";
 import { FeedBlob, AuthorBlob, AuthorImage, AuthorLink } from "./common";
-import { Link } from "react-router-dom";
 
 interface FeedProps {
   articles: Article[];
