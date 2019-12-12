@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 export const FeedBlob = styled.div`
   padding: 10px;
   box-sizing: border-box;
@@ -24,4 +25,11 @@ export const AuthorBlob = styled.div`
 export const AuthorImage = styled.img`
   height: 2em;
   margin-right: 0.3em;
+`;
+
+export const AuthorLink = styled(Link)`
+  color: #fff;
+  &:hover {
+    color: #bbb;
+  }
 `;

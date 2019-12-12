@@ -5,7 +5,7 @@ const getHeaders = () => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
   if (token) {
-    headers.append("authorization", token);
+    headers.append("token", token);
   }
   return headers;
 };
@@ -48,9 +48,14 @@ const Feed = {
     requests.get(`/articles?limit=${limit}&offset=${page ? page * limit : 0}`)
 };
 
+const Author = {
+  get: (username: string) => requests.get(`/profiles/${username}`)
+};
+
 export default {
   Auth,
   Feed,
+  Author,
   setToken: (_token: string | null) => {
     token = _token;
   }

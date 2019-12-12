@@ -78,7 +78,7 @@ export const LogedInView = ({ signOut, username }: IProps) => {
   return (
     <>
       <HeaderButton to="/">Home</HeaderButton>
-      <HeaderButton to="/">{username}</HeaderButton>
+      <HeaderButton to={`/user/${username}`}>{username}</HeaderButton>
       <HeaderButton to="/" onClick={signOut}>
         LogOut
       </HeaderButton>

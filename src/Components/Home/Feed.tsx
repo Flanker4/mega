@@ -1,6 +1,7 @@
 import React from "react";
 import { Article, Author } from "../../redux/feed/types";
-import { FeedBlob, AuthorBlob, AuthorImage } from "./common";
+import { FeedBlob, AuthorBlob, AuthorImage, AuthorLink } from "./common";
+import { Link } from "react-router-dom";
 
 interface FeedProps {
   articles: Article[];
@@ -10,14 +11,16 @@ interface ArticleProps {
   article: Article;
 }
 
-interface AuthorProps {
+export interface AuthorProps {
   author: Author;
 }
 const AuthorItem = ({ author }: AuthorProps) => {
   return (
     <AuthorBlob>
       <AuthorImage src={author.image} />
-      <h3>{author.username}</h3>
+      <AuthorLink to={`/user/${author.username}`}>
+        <h3>{author.username}</h3>
+      </AuthorLink>
     </AuthorBlob>
   );
 };
