@@ -8,5 +8,6 @@ interface FeedResponse {
 }
 
 export const feedActions = {
-  loadFeed: actionCreator.async<{ page: number }, FeedResponse>("loadFeed")
+  loadFeed: actionCreator.async<{ page: number }, FeedResponse>("loadFeed"),
+  sendMessage: actionCreator.async<{ message: string }, Article>("sendMessage")
 };

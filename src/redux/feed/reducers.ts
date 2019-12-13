@@ -1,11 +1,11 @@
 import { FeedState } from "./types";
 import { feedActions } from "./actions";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
-import { number } from "prop-types";
 
 const initialState: FeedState = {
   articleCount: 0,
-  isLoading: false
+  isLoading: false,
+  isSending: false
 };
 
 export const feed = reducerWithInitialState(initialState)
@@ -18,7 +18,21 @@ export const feed = reducerWithInitialState(initialState)
     isLoading: false
   }))
   .case(feedActions.loadFeed.done, (state, value) => ({
+    ...state,
     ...value.result,
     page: value.params.page,
     isLoading: false
+  }))
+  .case(feedActions.sendMessage.started, (state, value) => ({
+    ...state,
+    isSending: true
+  }))
+  .case(feedActions.sendMessage.failed, (state, value) => ({
+    ...state,
+    isSending: false
+  }))
+  .case(feedActions.sendMessage.done, (state, value) => ({
+    ...state,
+    articles: [value.result, ...(state.articles || [])],
+    isSending: false
   }));

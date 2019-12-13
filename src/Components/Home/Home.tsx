@@ -6,15 +6,25 @@ import Loader from "react-loader-spinner";
 import { connect } from "react-redux";
 import { IStore } from "../../redux";
 import { feedActions } from "../../redux/feed/actions";
+import { EnterMessage } from "./EnterMessage";
 
 interface HomeProps {
+  isAuthorized: boolean;
   isLoading: boolean;
   page?: number;
   articles?: Article[];
   loadPage: (payload: { page: number }) => any;
+  sendMessage: (payload: { message: string }) => any;
 }
 
-export const Home = ({ isLoading, articles, page, loadPage }: HomeProps) => {
+export const Home = ({
+  isAuthorized,
+  isLoading,
+  articles,
+  page,
+  loadPage,
+  sendMessage
+}: HomeProps) => {
   const [selectedPage, setSelectedPage] = useState(page || 0);
 
   useEffect(() => {
@@ -23,6 +33,7 @@ export const Home = ({ isLoading, articles, page, loadPage }: HomeProps) => {
     }
   }, [selectedPage, page, loadPage]);
 
+  const TopItem = isAuthorized && <EnterMessage sendMessage={sendMessage} />;
   const CentralItem = isLoading ? (
     <Loader type="ThreeDots" color="#09d3ac" height={100} width={100} />
   ) : (
@@ -31,6 +42,7 @@ export const Home = ({ isLoading, articles, page, loadPage }: HomeProps) => {
 
   return (
     <header className="App-header">
+      {TopItem}
       <Pager page={selectedPage} setPage={setSelectedPage} />
       {CentralItem}
       <Pager page={selectedPage} setPage={setSelectedPage} />
@@ -38,6 +50,13 @@ export const Home = ({ isLoading, articles, page, loadPage }: HomeProps) => {
   );
 };
 
-export default connect(({ feed }: IStore) => ({ ...feed }), {
-  loadPage: feedActions.loadFeed.started
-})(Home);
+export default connect(
+  ({ feed, auth }: IStore) => ({
+    ...feed,
+    isAuthorized: !!(auth.user && auth.user.token)
+  }),
+  {
+    loadPage: feedActions.loadFeed.started,
+    sendMessage: feedActions.sendMessage.started
+  }
+)(Home);

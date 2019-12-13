@@ -1,5 +1,6 @@
 export interface FeedState {
   isLoading: boolean;
+  isSending: boolean;
   page?: number;
   articles?: Article[];
   articleCount: number;
@@ -19,3 +20,15 @@ export interface Author {
   bio?: string;
   image: string;
 }
+
+export const DummyArticle = {
+  slug: "",
+  title: "Dummy",
+  description: "Dummy",
+  body: "Dummy",
+  author: {
+    username: "",
+    image: ""
+  },
+  favoritesCount: 0
+};

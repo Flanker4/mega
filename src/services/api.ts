@@ -5,7 +5,7 @@ const getHeaders = () => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
   if (token) {
-    headers.append("token", token);
+    headers.append("authorization", `Token ${token}`);
   }
   return headers;
 };
@@ -45,7 +45,14 @@ const Auth = {
 
 const Feed = {
   loadPage: (page: number = 0, limit: number = 10) =>
-    requests.get(`/articles?limit=${limit}&offset=${page ? page * limit : 0}`)
+    requests.get(`/articles?limit=${limit}&offset=${page ? page * limit : 0}`),
+  sendMessage: (message: string) =>
+    requests.post("/articles", {
+      title: message,
+      description: message,
+      body: message,
+      tagList: []
+    })
 };
 
 const Author = {
