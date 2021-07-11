@@ -11,7 +11,7 @@ interface EnterMessageProps {
 const MessageValidationScheme = Yup.object().shape({
   message: Yup.string()
     .min(1)
-    .required("Required")
+    .required("Requireds")
 });
 
 const EnterMessage = ({ sendMessage }: EnterMessageProps) => {
